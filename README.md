@@ -91,7 +91,7 @@ For the Ninja benchmarks I have used the above given CMake calls. For MSBuild I 
 
 The reason that MSBuild is slower is that for every Check there is a small Visual Studio (MSBuild) solution created and then msbuild is ran for it. msbuild is written in C# and it has to use the .NET platform.
 
-MSBuild generation is slower because it generates multiple variants x86, x64, Debug, and Release. See the CMake's [Visual Studio 15 2017](https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2015%202017.html) documentation for additional tweaks. I just wanted to keep things simple and use the defaults.
+MSBuild generation is slower because it generates multiple variants x86, x64, Debug, and Release. See the CMake's [Visual Studio 15 2017](https://cmake.org/cmake/help/latest/generator/Visual%20Studio%2015%202017.html), respectively [CMAKE_CONFIGURATION_TYPES](https://cmake.org/cmake/help/latest/variable/CMAKE_CONFIGURATION_TYPES.html), documentation for additional tweaks. I just wanted to keep things simple and use the defaults.
 
 The generation of the cmake_checks_cache.txt is faster than the first CMake run because the operating system has done some resource caching of itself.
 
