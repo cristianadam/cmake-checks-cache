@@ -78,7 +78,7 @@ CMake documentation describes `-C` command line parameter like this:
 
 ## Benchmark 
 
-I have ran the benchmarks on Windows 10 in a Visual C++ 2017 x64 command prompt.
+I have ran the benchmarks on Windows 10 on a Lenovo W510 Laptop in a Visual C++ 2017 x64 command prompt.
 
 | LLVM + Clang 6.0.0                        | Ninja     | MSBuild    |
 |-------------------------------------------|-----------|------------|
