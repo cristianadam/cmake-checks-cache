@@ -1,6 +1,6 @@
 # MIT License
 
-# Copyright (c) 2017 Cristian Adam
+# Copyright (c) 2017-2018 Cristian Adam
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,50 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-cmake_minimum_required(VERSION 3.4.3)
+include_guard(GLOBAL)
 
-set(cache_file ${CMAKE_CHECKS_CACHE_FILE})
-if(NOT cache_file)
-    set(cache_file ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt)
-endif()
+cmake_minimum_required(VERSION 3.11)
 
-# Include the content of CheckCCompilerFlag just not to have the original
-# include(CheckCSourceCompiles) which has precedence, and which doesn't have
-# a include guard, thus overriding my overriden version
-
-include(${CMAKE_CURRENT_LIST_DIR}/CheckCSourceCompiles.cmake)
-include(CMakeCheckCompilerFlagCommonPatterns)
-
-# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
-# file Copyright.txt or https://cmake.org/licensing for details.
-
-macro (CHECK_C_COMPILER_FLAG_original _FLAG _RESULT)
-   set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
-   set(CMAKE_REQUIRED_DEFINITIONS "${_FLAG}")
-
-   # Normalize locale during test compilation.
-   set(_CheckCCompilerFlag_LOCALE_VARS LC_ALL LC_MESSAGES LANG)
-   foreach(v ${_CheckCCompilerFlag_LOCALE_VARS})
-     set(_CheckCCompilerFlag_SAVED_${v} "$ENV{${v}}")
-     set(ENV{${v}} C)
-   endforeach()
-   CHECK_COMPILER_FLAG_COMMON_PATTERNS(_CheckCCompilerFlag_COMMON_PATTERNS)
-   _check_c_source_compiles("int main(void) { return 0; }" ${_RESULT}
-     # Some compilers do not fail with a bad flag
-     FAIL_REGEX "command line option .* is valid for .* but not for C" # GNU
-     ${_CheckCCompilerFlag_COMMON_PATTERNS}
-     )
-   foreach(v ${_CheckCCompilerFlag_LOCALE_VARS})
-     set(ENV{${v}} ${_CheckCCompilerFlag_SAVED_${v}})
-     unset(_CheckCCompilerFlag_SAVED_${v})
-   endforeach()
-   unset(_CheckCCompilerFlag_LOCALE_VARS)
-   unset(_CheckCCompilerFlag_COMMON_PATTERNS)
-
-   set (CMAKE_REQUIRED_DEFINITIONS "${SAFE_CMAKE_REQUIRED_DEFINITIONS}")
-endmacro ()
+include(DumpCMakeVariables)
+include(${CMAKE_ROOT}/Modules/CheckCCompilerFlag.cmake)
 
 macro(check_c_compiler_flag flag variable)
-    CHECK_C_COMPILER_FLAG_original("${flag}" ${variable})
-    file(APPEND ${cache_file} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Test ${flag}\")\n")
+    _check_c_compiler_flag("${flag}" ${variable})
+    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Test ${variable}\")\n")
 endmacro()

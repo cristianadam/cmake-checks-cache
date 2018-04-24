@@ -1,6 +1,6 @@
 # MIT License
 
-# Copyright (c) 2017-2018 Cristian Adam
+# Copyright (c) 2018 Cristian Adam
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,13 @@ include_guard(GLOBAL)
 cmake_minimum_required(VERSION 3.11)
 
 include(DumpCMakeVariables)
-include(${CMAKE_ROOT}/Modules/CheckIncludeFile.cmake)
+include(${CMAKE_ROOT}/Modules/CheckIncludeFiles.cmake)
 
-macro(check_include_file header variable)
-    _check_include_file(${header} ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${header}\")\n")
+macro(check_include_files headers variable)
+    if(NOT DEFINED "${variable}")
+        _check_include_files("${headers}" ${variable})
+    else()
+        _check_include_files("${headers}" ${variable} "${ARGN}")
+    endif()
+    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${headers}\")\n")
 endmacro()

@@ -1,6 +1,6 @@
 # MIT License
 
-# Copyright (c) 2017 Cristian Adam
+# Copyright (c) 2017-2018 Cristian Adam
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-cmake_minimum_required(VERSION 3.4.3)
+include_guard(GLOBAL)
 
-set(cache_file ${CMAKE_CHECKS_CACHE_FILE})
-if(NOT cache_file)
-    set(cache_file ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt)
-endif()
+cmake_minimum_required(VERSION 3.11)
 
+include(DumpCMakeVariables)
 include(${CMAKE_ROOT}/Modules/CheckTypeSize.cmake)
+
 macro(check_type_size type variable)
     _check_type_size(${type} ${variable})
-    file(APPEND ${cache_file} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"CHECK_TYPE_SIZE: sizeof(${type})\")\n")
+    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(HAVE_${variable} \"${HAVE_${variable}}\" CACHE INTERNAL \"Result of TRY_COMPILE\")\n")
+    if(HAVE_${variable})
+      file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"CHECK_TYPE_SIZE: sizeof(${type})\")\n")
+    else()
+      file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"\" CACHE INTERNAL \"CHECK_TYPE_SIZE: ${type} unknown\")\n")
+    endif()
 endmacro()
