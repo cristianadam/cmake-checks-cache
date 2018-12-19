@@ -29,5 +29,5 @@ include(${CMAKE_ROOT}/Modules/CheckIncludeFile.cmake)
 
 macro(check_include_file header variable)
     _check_include_file(${header} ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${header}\")\n")
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${header}\")\n")
 endmacro()
