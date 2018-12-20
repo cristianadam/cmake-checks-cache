@@ -25,9 +25,11 @@ include_guard(GLOBAL)
 cmake_minimum_required(VERSION 3.11)
 
 include(DumpCMakeVariables)
-include(${CMAKE_ROOT}/Modules/CheckIncludeFile.cmake)
+include(${CMAKE_ROOT}/Modules/TestBigEndian.cmake)
 
-macro(check_include_file header variable)
-    _check_include_file(${header} ${variable})
-    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${header}\")\n")
+#macro(TEST_BIG_ENDIAN VARIABLE)
+
+macro(test_big_endian variable)
+    _test_big_endian(${variable})
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(HAVE_${variable} \"${${variable}}\" CACHE INTERNAL \"Test Big Endian ${variable}\")\n")
 endmacro()

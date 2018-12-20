@@ -29,5 +29,5 @@ include(${CMAKE_ROOT}/Modules/CheckCCompilerFlag.cmake)
 
 macro(check_c_compiler_flag flag variable)
     _check_c_compiler_flag("${flag}" ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Test ${variable}\")\n")
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Test ${variable}\")\n")
 endmacro()

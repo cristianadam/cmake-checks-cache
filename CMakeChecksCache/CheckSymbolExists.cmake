@@ -29,5 +29,5 @@ include(${CMAKE_ROOT}/Modules/CheckSymbolExists.cmake)
 
 macro(check_symbol_exists symbol header variable)
     _check_symbol_exists(${symbol} "${header}" ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have symbol ${symbol}\")\n")
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have symbol ${symbol}\")\n")
 endmacro()

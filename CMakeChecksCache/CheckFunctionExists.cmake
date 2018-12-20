@@ -29,5 +29,5 @@ include(${CMAKE_ROOT}/Modules/CheckFunctionExists.cmake)
 
 macro(check_function_exists function variable)
     _check_function_exists(${function} ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have function ${function}\")\n")
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have function ${function}\")\n")
 endmacro()

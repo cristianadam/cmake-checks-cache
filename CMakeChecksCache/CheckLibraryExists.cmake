@@ -29,5 +29,5 @@ include(${CMAKE_ROOT}/Modules/CheckLibraryExists.cmake)
 
 macro(check_library_exists library function location variable)
     _check_library_exists("${library}" ${function} "${location}" ${variable})
-    file(APPEND ${CMAKE_BINARY_DIR}/cmake_checks_cache.txt "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have library ${library}\")\n")
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have library ${library}\")\n")
 endmacro()

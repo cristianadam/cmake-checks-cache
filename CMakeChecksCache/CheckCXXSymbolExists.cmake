@@ -25,9 +25,9 @@ include_guard(GLOBAL)
 cmake_minimum_required(VERSION 3.11)
 
 include(DumpCMakeVariables)
-include(${CMAKE_ROOT}/Modules/CheckIncludeFile.cmake)
+include(${CMAKE_ROOT}/Modules/CheckCXXSymbolExists.cmake)
 
-macro(check_include_file header variable)
-    _check_include_file(${header} ${variable})
-    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have include ${header}\")\n")
+macro(check_cxx_symbol_exists symbol header variable)
+    _check_cxx_symbol_exists(${symbol} "${header}" ${variable})
+    file(APPEND ${CMAKE_CHECKS_CACHE_FILE} "set(${variable} \"${${variable}}\" CACHE INTERNAL \"Have C++ symbol ${symbol}\")\n")
 endmacro()
